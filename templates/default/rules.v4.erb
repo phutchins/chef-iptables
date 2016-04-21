@@ -1,0 +1,35 @@
+*nat
+# Prerouting policy
+<%= @rules_prerouting_policy %>
+# Prerouting base
+<%= @rules_prerouting_base %>
+# Custom rules added by 'rules_prerouting'
+<%= @rules_prerouting %>
+COMMIT
+*filter
+# Filter policy
+:INPUT DROP [0:0]
+:FORWARD DROP [0:0]
+:OUTPUT ACCEPT [0:0]
+<% @rules_networks.each do |network,data| %>
+:<%= network %> - [0:0]
+<% end %>
+
+-A INPUT -s 127.0.0.1 -j ACCEPT
+-A INPUT -i lo -j ACCEPT
+<% @rules_networks.each do |network,data| %>
+-A INPUT <% if data['iface'] %>-i <%= data['iface'] %><% end %> -j <%= network %>
+-A <%= network %> -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+<% end %>
+<%= @rules_filter_policy %>
+# Filter rules from Base
+<%= @rules_filter_base %>
+<% if @vpn_enabled %>
+# VPN Rules
+<%= @rules_filter_vpn_base %>
+<% end %>
+# Custom rules added by 'rules_filter'
+<%= @rules_filter %>
+# Custom rules added by 'rules'
+<%= @rules %>
+COMMIT

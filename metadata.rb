@@ -1,0 +1,7 @@
+name             'chef-iptables'
+maintainer       'Philip Hutchins'
+maintainer_email 'flipture@gmail.com'
+license          'MIT'
+description      'Manages iptables for nodes'
+long_description 'Manages iptables for nodes'
+version          '0.1.2'
