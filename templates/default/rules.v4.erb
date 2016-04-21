@@ -8,10 +8,10 @@
 COMMIT
 *filter
 # Filter policy
--A INPUT -i lo -j ACCEPT
 <% @rules_networks.each do |network,data| %>
 :<%= network %> - [0:0]
 <% end %>
+-A INPUT -i lo -j ACCEPT
 <% @rules_networks.each do |network,data| %>
 -A INPUT <% if data['iface'] %>-i <%= data['iface'] %><% end %> -j <%= network %>
 -A <%= network %> -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
