@@ -19,7 +19,6 @@ RULES
 default['base']['iptables']['rules_filter_base'] = <<-RULES
 # SSH
 -A pubnet -p tcp -m tcp --dport 22 -j ACCEPT
--A service -p tcp -m tcp --dport 22 -j ACCEPT
 
 # Monitoring
 -A pubnet -p tcp -m tcp --dport 10050 -j ACCEPT
